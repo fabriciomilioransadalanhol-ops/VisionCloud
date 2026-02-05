@@ -1,6 +1,7 @@
 Cypress.Commands.add(
   'login',
-  (usuario: string, senha: string, codigoCliente = '1') => {
+  (usuario, senha, codigoCliente = '1') => {
+    cy.visit('/#autenticar')
 
     cy.get('vs-input-text[formcontrolname="usuario"]')
       .find('input')
@@ -17,6 +18,13 @@ Cypress.Commands.add(
       .clear()
       .type(codigoCliente)
 
-    cy.contains('button', 'Acessar').click()
+    cy.get('p-checkbox[formcontrolname="guardarAutenticacao"]')
+      .click()
+
+    cy.contains('button', 'Acessar')
+      .click()
+      
+        
+    cy.url().should('not.include', '/autenticar')
   }
 )

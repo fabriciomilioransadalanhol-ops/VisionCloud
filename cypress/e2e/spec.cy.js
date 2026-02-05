@@ -1,8 +1,8 @@
 describe('US001: Validacao de tela de Login', () => {
-
-  beforeEach(() => {
-    cy.visit('http://192.168.2.25:11090/#/autenticar')
-  });
+    it('deve realizar login com sucesso', () => {
+    cy.login('fabricio', 'vsys4849')
+  })
+});
 
   it('Validação de pagina', () => {
     checarPagina('Swag Labs', 'http://192.168.2.25:11090')
@@ -32,7 +32,7 @@ describe('US001: Validacao de tela de Login', () => {
     })
   })
 
-})
+
 
 // Intencionalmente local por limitação do desafio
 function preencherDadosLogin(username, password) {

@@ -1,9 +1,11 @@
-const { defineConfig } = require("cypress");
+import { defineConfig } from 'cypress'
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
+    baseUrl: 'http://192.168.2.25:11090',
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      return config
     },
   },
-});
+})
+
