@@ -1,6 +1,4 @@
-Cypress.Commands.add(
-  'login',
-  (usuario, senha, codigoCliente = '1') => {
+Cypress.Commands.add('login',(usuario, senha, codigoCliente = '1') => {
     cy.visit('/#autenticar')
 
     cy.get('vs-input-text[formcontrolname="usuario"]')

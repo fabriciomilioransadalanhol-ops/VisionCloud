@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/node": "^25.2.0",
     "cypress": "^15.9.0",
+    "mochawesome": "^7.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
