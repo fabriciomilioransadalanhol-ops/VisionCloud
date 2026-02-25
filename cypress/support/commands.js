@@ -35,6 +35,19 @@ Cypress.Commands.add('CadastraUsuario',(nome, cpf, login, email, senha, confirma
 
     cy.ClicarBotao('Cadastrar')
 })
+Cypress.Commands.add('CadastraPerfilUsuario',(nome, descricao) => {
+
+  cy.ClicarnoMenu('Usuários')
+  cy.ClicarNoSubMenu('Perfil de Usuário')
+
+  cy.ClicarBotao('Novo')
+
+  if(nome) cy.ObterFormNome('nomePerfil', nome)
+  if(descricao) cy.ObterFormNome('descricao', descricao)
+
+  cy.ClicarBotao('Próximo')
+  cy.ClicarBotao('Cadastrar')
+})
 Cypress.Commands.add('VerificarMensagemErro', (mensagem) => {
   cy.contains('.p-toast-detail', mensagem).should('be.visible')
 })
