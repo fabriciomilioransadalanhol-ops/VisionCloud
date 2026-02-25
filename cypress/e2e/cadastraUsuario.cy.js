@@ -1,6 +1,14 @@
+
 describe('Cadastrar Usuário', () => {
+  beforeEach(() => {
+    cy.session('usuarioLogin', () => {
+      cy.Login('fabricio', 'fabri1320')
+    }) 
+    cy.visit('/#/usuarios/listar')
+  })
   it('deve realizar cadastro com sucesso', () => {
-    cy.login('fabricio', 'fabri1320')
+
+    cy.visit('/#/usuarios/cadastrar')
 
     cy.get('span.menu-title')
       .contains('Usuários')
@@ -17,27 +25,27 @@ describe('Cadastrar Usuário', () => {
 
     cy.get('vs-input-text[formcontrolname="nomeCompleto"]')
       .find('input')
-      .type('Teste Automatizado QA')
+      .type(nome)
 
     cy.get('vs-input-mask[formcontrolname="cpf"]')
       .find('input')
-      .type('95080897090')
+      .type(cpf)
 
     cy.get('vs-input-text[formcontrolname="login"]')
       .find('input')
-      .type('teste.auto')
+      .type(login)
 
     cy.get('vs-input-text[formcontrolname="email"]')
       .find('input')
-      .type('fabricio@teste2.com')
+      .type(email)
 
     cy.get('vs-input-password[formcontrolname="senha"]')
       .find('input')
-      .type('vsys4849')
+      .type(senha)
 
     cy.get('vs-input-password[formcontrolname="confirmarSenha"]')
       .find('input')
-      .type('vsys4849')
+      .type(confirmaSenha)
 
     cy.contains('p-tab','Empresas')
       .click()
@@ -51,8 +59,6 @@ describe('Cadastrar Usuário', () => {
      cy.contains('button', 'Cadastrar')
        .should('be.visible')
        .and('not.be.disabled')
-       .click()
-
-  
+       .click() 
   })
 })
