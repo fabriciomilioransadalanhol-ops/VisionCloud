@@ -14,7 +14,7 @@ describe('Login', () => {
       cy.Login(cenario.usuario, cenario.senha)
 
         if (cenario.erro) {
-          cy.verificarMensagemErro(cenario.erro)
+          cy.VerificarMensagemErro(cenario.erro)
         }
         if(cenario.descricaoCenario == 'Login efetuado com sucesso'){
           cy.ChecarPagina('Painel de Controle', '/painel')
@@ -22,7 +22,7 @@ describe('Login', () => {
         
       })
     })
-  })
+})
 
 
 

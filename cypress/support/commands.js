@@ -1,88 +1,74 @@
 Cypress.Commands.add('Login', (usuario, senha, codigoCliente = '1') => {
 
-  if(usuario) cy.TesteForm('usuario', usuario)
+  if(usuario) cy.ObterFormNome('usuario', usuario)
 
-  if(senha) cy.TesteForm('senha', senha)
+  if(senha) cy.ObterFormNome('senha', senha)
 
-  if(codigoCliente) cy.TesteForm('codigoCliente', codigoCliente)
+  if(codigoCliente) cy.ObterFormNome('codigoCliente', codigoCliente)
 
   cy.ClicarBotao('Acessar')
   
 })
-Cypress.Commands.add('cadastraUsuario',(nome, cpf, login, email, senha, confirmaSenha) => {
-  cy.visit('#/')
-
+Cypress.Commands.add('CadastraUsuario',(nome, cpf, login, email, senha, confirmaSenha) => {
   
-    cy.get('span.menu-title')
-      .contains('Usuários')
-      .click()
+    cy.ClicarnoMenu('Usuários')
 
-    cy.contains('span.menu-title', 'Usuários')
-      .closest('.menu-item.menu-accordion')
-      .click()
+    cy.ClicarNoSubMenu('Usuários')
 
-    cy.contains('button', 'Novo')
-      .should('be.visible')
-      .and('not.be.disabled')
-      .click()
+    cy.ClicarBotao('Novo')
 
-    cy.get('vs-input-text[formcontrolname="nomeCompleto"]')
-      .find('input')
-      .type(nome)
+    if(nome) cy.ObterFormNome('nomeCompleto', nome)
 
-    cy.get('vs-input-mask[formcontrolname="cpf"]')
-      .find('input')
-      .type(cpf)
+    if(cpf) cy.ObterFormNome('cpf', cpf)
 
-    cy.get('vs-input-text[formcontrolname="login"]')
-      .find('input')
-      .type(login)
+    if(login) cy.ObterFormNome('login', login)
 
-    cy.get('vs-input-text[formcontrolname="email"]')
-      .find('input')
-      .type(email)
+    if(email) cy.ObterFormNome('email', email)
 
-    cy.get('vs-input-password[formcontrolname="senha"]')
-      .find('input')
-      .type(senha)
+    if(senha) cy.ObterFormNome('senha', senha)
 
-    cy.get('vs-input-password[formcontrolname="confirmarSenha"]')
-      .find('input')
-      .type(confirmaSenha)
+    if(confirmaSenha) cy.ObterFormNome('confirmarSenha', confirmaSenha)
 
-    cy.contains('p-tab','Empresas')
-      .click()
+    cy.ClicarNaAba('tab', 'Empresas');
 
-    cy.contains('tr', 'novooo')
-       .find('input[type="checkbox"]')
-      .first()
-      .check({ force: true })
+    cy.MarcarInputPorTexto('checkbox', 'novooo')
 
-
-     cy.contains('button', 'Cadastrar')
-       .should('be.visible')
-       .and('not.be.disabled')
-       .click()
-  }
-)
-Cypress.Commands.add('verificarMensagemErro', (mensagem) => {
+    cy.ClicarBotao('Cadastrar')
+})
+Cypress.Commands.add('VerificarMensagemErro', (mensagem) => {
   cy.contains('.p-toast-detail', mensagem).should('be.visible')
 })
-
-Cypress.Commands.add('TesteForm', (control, text) => {
+Cypress.Commands.add('ObterFormNome', (control, text) => {
     cy.get(`vs-input-text[formcontrolname="${control}"]`).find('input').type(text)
 })
-
+Cypress.Commands.add('MarcarInputPorTexto', (tipo, texto) => {
+  cy.contains('tr', texto)
+    .find(`input[type="${tipo}"]`)
+    .first()
+    .check({ force: true });
+})
 Cypress.Commands.add('ClicarBotao', (button) => {
       cy.contains('button', button)
       .should('be.visible')
       .and('not.be.disabled')
       .click()
 })
-
 Cypress.Commands.add('ChecarPagina', (titulo, url) => {
   cy.contains(titulo),
   cy.url().should('include', url)
+})
+Cypress.Commands.add('ClicarNaAba', (aba,texto) => {
+  cy.contains(`[role="${aba}"]`, texto).click();
+})
+Cypress.Commands.add('ClicarNoMenu', (menu) => {
+  cy.contains('span.menu-title', menu)
+    .should('be.visible')
+    .click()
+})
+Cypress.Commands.add('ClicarNoSubMenu', (submenu) => {
+  cy.contains('span.menu-title', submenu)
+    .should('be.visible')
+    .click()
 })
 
 
