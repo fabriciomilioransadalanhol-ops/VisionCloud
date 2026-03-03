@@ -1,43 +1,44 @@
-Cypress.Commands.add('Login', (usuario, senha, codigoCliente = '1') => {
+Cypress.Commands.add('Login', (usuario, senha, codigoCliente) => {
 
   if(usuario) cy.ObterFormNome('usuario', usuario)
 
-  if(senha) cy.ObterFormNome('senha', senha)
+  if(senha) cy.ObterFormSenha('senha', senha)
 
   if(codigoCliente) cy.ObterFormNome('codigoCliente', codigoCliente)
 
   cy.ClicarBotao('Acessar')
-  
+
+
 })
 Cypress.Commands.add('CadastraUsuario',(nome, cpf, login, email, senha, confirmaSenha) => {
   
-    cy.ClicarnoMenu('Usuários')
+    cy.ClicarNoMenu('Usuários')
 
-    cy.ClicarNoSubMenu('Usuários')
+    //cy.ClicarNoSubMenu('Usuários')
 
-    cy.ClicarBotao('Novo')
+    // cy.ClicarBotao('Novo')
 
-    if(nome) cy.ObterFormNome('nomeCompleto', nome)
+    // if(nome) cy.ObterFormNome('nomeCompleto', nome)
 
-    if(cpf) cy.ObterFormNome('cpf', cpf)
+    // if(cpf) cy.ObterFormNome('cpf', cpf)
 
-    if(login) cy.ObterFormNome('login', login)
+    // if(login) cy.ObterFormNome('login', login)
 
-    if(email) cy.ObterFormNome('email', email)
+    // if(email) cy.ObterFormNome('email', email)
 
-    if(senha) cy.ObterFormNome('senha', senha)
+    // if(senha) cy.ObterFormNome('senha', senha)
 
-    if(confirmaSenha) cy.ObterFormNome('confirmarSenha', confirmaSenha)
+    // if(confirmaSenha) cy.ObterFormNome('confirmarSenha', confirmaSenha)
 
-    cy.ClicarNaAba('tab', 'Empresas');
+    // cy.ClicarNaAba('tab', 'Empresas');
 
-    cy.MarcarInputPorTexto('checkbox', 'novooo')
+    // cy.MarcarInputPorTexto('checkbox', 'novooo')
 
-    cy.ClicarBotao('Cadastrar')
+    // cy.ClicarBotao('Cadastrar')
 })
 Cypress.Commands.add('CadastraPerfilUsuario',(nome, descricao) => {
 
-  cy.ClicarnoMenu('Usuários')
+  cy.ClicarNoMenu('Usuários')
   cy.ClicarNoSubMenu('Perfil de Usuário')
 
   cy.ClicarBotao('Novo')
@@ -83,6 +84,6 @@ Cypress.Commands.add('ClicarNoSubMenu', (submenu) => {
     .should('be.visible')
     .click()
 })
-
-
-
+Cypress.Commands.add('ObterFormSenha', (control, text) => {
+      cy.get(`vs-input-password[formcontrolname="${control}"]`).find('input').type(text)
+})

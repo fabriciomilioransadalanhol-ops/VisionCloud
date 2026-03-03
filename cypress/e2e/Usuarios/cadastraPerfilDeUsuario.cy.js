@@ -3,7 +3,7 @@ describe('Cadastrar Perfil de Usuário', () => {
     cy.session('usuarioLogin', () => {
       cy.Login('fabricio', 'fabri1320')
     }) 
-    cy.visit('/#/usuarios/#/usuarios/perfis-usuarios/listar')
+    cy.visit('/usuarios')
   })
 
   const cenarios = [
@@ -17,6 +17,12 @@ describe('Cadastrar Perfil de Usuário', () => {
     it(`Cenário: ${cenario.descricaoCenario}`, () => {
       cy.CadastraPerfilUsuario(cenario.nome, cenario.descricao)
 
+      if (cenario.erro) {
+        cy.VerificarMensagemErro(cenario.erro)
+      }
+      if(cenario.descricaoCenario == 'Cadastro efetuado com sucesso'){//VERIFICAR A MENSAGEM DE SUCESSO
+        cy.ChecarPagina('Painel de Controle', '/painel')
+      }
   })
 })
 })
