@@ -1,5 +1,8 @@
 Cypress.Commands.add('Login', (usuario, senha, codigoCliente) => {
 
+  cy.visit('/#/autenticar')
+
+
   if(usuario) cy.ObterFormNome('usuario', usuario)
 
   if(senha) cy.ObterFormSenha('senha', senha)
@@ -11,10 +14,6 @@ Cypress.Commands.add('Login', (usuario, senha, codigoCliente) => {
 
 })
 Cypress.Commands.add('CadastraUsuario',(nome, cpf, login, email, senha, confirmaSenha) => {
-  
-    cy.ClicarNoMenu('Usuários', '/#/usuarios/listar')
-
-    cy.ClicarBotao('Novo')
 
     if(nome) cy.ObterFormNome('nomeCompleto', nome)
 
@@ -74,19 +73,4 @@ Cypress.Commands.add('ClicarNaAba', (aba,texto) => {
 })
 Cypress.Commands.add('ObterFormSenha', (control, text) => {
       cy.get(`vs-input-password[formcontrolname="${control}"]`).find('input').type(text)
-})
-Cypress.Commands.add('ClicarNoMenu', (menuPrincipal, rotaSubmenu = null) => {
-
-  cy.contains('span.menu-title', menuPrincipal, { timeout: 10000 })
-    .should('be.visible')
-
-  // Nova busca antes de clicar (evita problema de re-render)
-  cy.contains('span.menu-title', menuPrincipal)
-    .click()
-
-  if (rotaSubmenu) {
-    cy.get(`a[href*="${rotaSubmenu}"]`, { timeout: 10000 })
-      .should('be.visible')
-      .click()
-  }
 })
