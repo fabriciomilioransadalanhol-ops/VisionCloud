@@ -12,29 +12,27 @@ Cypress.Commands.add('Login', (usuario, senha, codigoCliente) => {
 })
 Cypress.Commands.add('CadastraUsuario',(nome, cpf, login, email, senha, confirmaSenha) => {
   
-    cy.ClicarNoMenu('Usuários')
+    cy.ClicarNoMenu('Usuários', '/#/usuarios/listar')
 
-    //cy.ClicarNoSubMenu('Usuários')
+    cy.ClicarBotao('Novo')
 
-    // cy.ClicarBotao('Novo')
+    if(nome) cy.ObterFormNome('nomeCompleto', nome)
 
-    // if(nome) cy.ObterFormNome('nomeCompleto', nome)
+    if(cpf) cy.ObterFormNome('cpf', cpf)
 
-    // if(cpf) cy.ObterFormNome('cpf', cpf)
+    if(login) cy.ObterFormNome('login', login)
 
-    // if(login) cy.ObterFormNome('login', login)
+    if(email) cy.ObterFormNome('email', email)
 
-    // if(email) cy.ObterFormNome('email', email)
+    if(senha) cy.ObterFormNome('senha', senha)
 
-    // if(senha) cy.ObterFormNome('senha', senha)
+    if(confirmaSenha) cy.ObterFormNome('confirmarSenha', confirmaSenha)
 
-    // if(confirmaSenha) cy.ObterFormNome('confirmarSenha', confirmaSenha)
+    cy.ClicarNaAba('tab', 'Empresas');
 
-    // cy.ClicarNaAba('tab', 'Empresas');
+    cy.MarcarInputPorTexto('checkbox', 'novooo')
 
-    // cy.MarcarInputPorTexto('checkbox', 'novooo')
-
-    // cy.ClicarBotao('Cadastrar')
+    cy.ClicarBotao('Cadastrar')
 })
 Cypress.Commands.add('CadastraPerfilUsuario',(nome, descricao) => {
 
@@ -53,7 +51,7 @@ Cypress.Commands.add('VerificarMensagemErro', (mensagem) => {
   cy.contains('.p-toast-detail', mensagem).should('be.visible')
 })
 Cypress.Commands.add('ObterFormNome', (control, text) => {
-    cy.get(`vs-input-text[formcontrolname="${control}"]`).find('input').type(text)
+    cy.get(`[formcontrolname="${control}"]`).find('input').type(text)
 })
 Cypress.Commands.add('MarcarInputPorTexto', (tipo, texto) => {
   cy.contains('tr', texto)
@@ -74,16 +72,21 @@ Cypress.Commands.add('ChecarPagina', (titulo, url) => {
 Cypress.Commands.add('ClicarNaAba', (aba,texto) => {
   cy.contains(`[role="${aba}"]`, texto).click();
 })
-Cypress.Commands.add('ClicarNoMenu', (menu) => {
-  cy.contains('span.menu-title', menu)
-    .should('be.visible')
-    .click()
-})
-Cypress.Commands.add('ClicarNoSubMenu', (submenu) => {
-  cy.contains('span.menu-title', submenu)
-    .should('be.visible')
-    .click()
-})
 Cypress.Commands.add('ObterFormSenha', (control, text) => {
       cy.get(`vs-input-password[formcontrolname="${control}"]`).find('input').type(text)
+})
+Cypress.Commands.add('ClicarNoMenu', (menuPrincipal, rotaSubmenu = null) => {
+
+  cy.contains('span.menu-title', menuPrincipal, { timeout: 10000 })
+    .should('be.visible')
+
+  // Nova busca antes de clicar (evita problema de re-render)
+  cy.contains('span.menu-title', menuPrincipal)
+    .click()
+
+  if (rotaSubmenu) {
+    cy.get(`a[href*="${rotaSubmenu}"]`, { timeout: 10000 })
+      .should('be.visible')
+      .click()
+  }
 })

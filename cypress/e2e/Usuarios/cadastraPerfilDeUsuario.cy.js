@@ -1,9 +1,12 @@
 describe('Cadastrar Perfil de Usuário', () => {
   beforeEach(() => {
     cy.session('usuarioLogin', () => {
-      cy.Login('fabricio', 'fabri1320')
+      cy.visit('/#/autenticar')
+      cy.Login('fabricio', 'fabri1320', '1')
+      cy.url().should('include', '/#/painel');
+
     }) 
-    cy.visit('/usuarios')
+    cy.visit('/#/painel')
   })
 
   const cenarios = [
