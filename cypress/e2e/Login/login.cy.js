@@ -1,13 +1,11 @@
 describe('Login', () => {
-  beforeEach(() => {
-    cy.visit('/#/autenticar')
-  })
+
   const cenarios = [
-    { descricaoCenario: 'Login efetuado com sucesso', usuario: 'fabricio', senha: 'fabri1320', codigoCliente: '1', sucesso: true, status: 200 },
-    { descricaoCenario: 'Login com usuario Inativo', usuario: 'teste.auto2', senha: '12345678', codigoCliente: '1', erro: 'Usuário desativado', status: 400 },
+    { descricaoCenario: 'Login efetuado com sucesso', usuario: 'fabricio', senha: 'fabri1320', codigoCliente: '1', },
+    { descricaoCenario: 'Login com usuario Inativo', usuario: 'teste.auto2', senha: '12345678', codigoCliente: '1', erro: 'Usuário desativado' },
     //{ descricaoCenario: 'Usuario vazio', usuario: '', senha: '', status: 400 },
-    { descricaoCenario: 'Login com senha incorreta', usuario: 'fabricio', senha: '123456789', codigoCliente: '1', erro: 'Credenciais inválidas', status: 400},
-    { descricaoCenario: 'Login com código de outro cliente', usuario: 'fabricio', senha: 'fabri1320', codigoCliente: '23', status: 400 },
+    { descricaoCenario: 'Login com senha incorreta', usuario: 'fabricio', senha: '123456789', codigoCliente: '1', erro: 'Credenciais inválidas' },
+    { descricaoCenario: 'Login com código de outro cliente', usuario: 'fabricio', senha: 'fabri1320', codigoCliente: '23' },
 
   ]
 
@@ -15,15 +13,14 @@ describe('Login', () => {
     it(`Cenário: ${cenario.descricaoCenario}`, () => {
       cy.Login(cenario.usuario, cenario.senha, cenario.codigoCliente)
 
-        if (cenario.erro) {
-          cy.VerificarMensagemErro(cenario.erro)
-        }
-        if(cenario.descricaoCenario == 'Login efetuado com sucesso'){
-          cy.ChecarPagina('Painel de Controle', '/painel')
-        }
-        
-      })
+      if (cenario.erro) {
+        cy.VerificarMensagemErro(cenario.erro)
+      }
+      if (cenario.descricaoCenario == 'Login efetuado com sucesso') {
+        cy.ChecarPagina('Painel de Controle', '/painel')
+      }
     })
+  })
 })
 
 
