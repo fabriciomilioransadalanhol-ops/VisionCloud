@@ -48,19 +48,39 @@ Cypress.Commands.add('CadastraPerfilUsuario',(nome, descricao) => {
   cy.ClicarBotao('Próximo')
   cy.ClicarBotao('Cadastrar')
 })
-Cypress.Commands.add('CadastraCliente',(cnpj, razaoSocial) => {
+Cypress.Commands.add('CadastraCliente',(cnpj, razaoSocial, nomeFantasia, representanteLegal, email, telefone, inscricaoEstadual, inscricaoMunicipal, pessoaClassificacao, regimeTributario) => {
 
   cy.ClicarBotao('Novo')
 
   if(cnpj)
     cy.ObterFormCnpj('cnpj', cnpj)
 
-  cy.ObterFormData('dataFundacao', '2026-2-9')
+  cy.ObterFormData('dataFundacao')
 
   if(razaoSocial)
     cy.ObterFormNome('razaoSocial', razaoSocial)
 
-  // cy.ObterFormSelect('regimeTributario', regimeTributario)
+  if(nomeFantasia)
+    cy.ObterFormNome('nomeFantasia', nomeFantasia)
+
+  if(representanteLegal)
+    cy.ObterFormNome('representanteLegal', representanteLegal)
+
+  if(email)
+    cy.ObterFormNome('email', email)
+
+  if(telefone)
+    cy.ObterFormNome('telefone', telefone)
+
+  if(inscricaoEstadual)
+    cy.ObterFormNome('inscricaoEstadual', inscricaoEstadual)
+
+  if(inscricaoMunicipal)
+    cy.ObterFormNome('inscricaoMunicipal', inscricaoMunicipal)
+
+   cy.ObterFormSelect('regimeTributario', regimeTributario)
+
+   cy.ObterFormAutocomplete('pessoaClassificacoes', pessoaClassificacao)
 
   // cy.MarcarInputPorTexto('checkbox', 'ABATE DE AVES')
 
@@ -106,11 +126,12 @@ Cypress.Commands.add('ObterFormCnpj', (control, text) => {
       cy.get(`vs-input-cnpj[formcontrolname="${control}"]`).find('input').type(text)
 })
 Cypress.Commands.add('ObterFormSelect', (control, text) => {
-  cy.get(`[formcontrolname="${control}"]`).find('p-dropdown')
+  cy.get(`[formcontrolname="${control}"]`)
   .click()
 
-  cy.get('arai-label').contains(text)
-  .click()
+ cy.get(`[aria-label="Option List"]`)
+    .contains(text)
+    .click()
 })
 Cypress.Commands.add('ObterFormData', (control) => {
   cy.get(`[formcontrolname="${control}"]`).click()
@@ -118,4 +139,16 @@ Cypress.Commands.add('ObterFormData', (control) => {
   cy.get('.p-datepicker-today')
     .find('.p-datepicker-day')
     .click()
+})
+Cypress.Commands.add('ObterFormAutocomplete', (control, text) => {
+  cy.get(`[formcontrolname="${control}"]`)
+  .click()
+  
+  cy.get(`[aria-label="Teste Cypress"]`)
+  .contains(text)
+  .click()
+
+  // cy.get(`[aria-autocomplete="list"]`)
+  //   .contains(text)
+  //   .click()
 })
